@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Agri-Fund</string>
+    <string-array name="menu_items">
+        <item>Profile</item>
+        <item>Customer Support</item>
+        <!-- Add other menu items if needed -->
+    </string-array>
+</resources>
