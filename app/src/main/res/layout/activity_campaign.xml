@@ -120,7 +120,6 @@
             android:layout_height="30dp"
             android:background="@drawable/boxedittext"
             android:id="@+id/campaignHost"
-            android:inputType="number"
             android:hint="     Enter your fullname"
             android:layout_margin="5dp"
             android:layout_gravity="center_horizontal"/>

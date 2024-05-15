@@ -1,8 +1,10 @@
 package com.crowdfunding.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -26,7 +28,7 @@ class Invest : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_invest)
 
-        val campaignTitle = findViewById<EditText>(R.id.campaignTitle)
+       // val campaignTitle = findViewById<EditText>(R.id.campaignTitle)
 
         searchText = findViewById(R.id.searchbar)
         camArrayList = ArrayList()
@@ -36,8 +38,17 @@ class Invest : AppCompatActivity() {
         recCampaign.layoutManager = layoutManager
         recCampaign.adapter = adapter
 
+
+
+
         setCamList()
         searchData()
+
+        val addbtn = findViewById<Button>(R.id.newCamp)
+        addbtn.setOnClickListener {
+            val intent = Intent(this, Campaign::class.java)
+            startActivity(intent)
+        }
 
     }
     private fun searchData() {
@@ -59,12 +70,29 @@ class Invest : AppCompatActivity() {
     }
 
     private fun setCamList() {
-        camArrayList.add(DataClass("Piggery", "Starting in piggery business and farming",
-            "50,000","Crops", "Art narboada"))
-        camArrayList.add(DataClass("Crops", "Starting crops farming",
-            "40,000","Crops", "miles maratas"))
-        camArrayList.add(DataClass("Telapia farm", "Starting fish farming",
-            "30,000","Fish", "lowe canete"))
+        // Retrieve data from putExtra
+        val getTitle = intent.getStringExtra("getTitle")
+        val getDesc = intent.getStringExtra("getDescription")
+        val getTarget = intent.getStringExtra("getTargetAmt")
+        val getType = intent.getStringExtra("getType")
+        val getHost = intent.getStringExtra("getHost")
+
+        // Check for null values
+        if (getTitle != null && getDesc != null && getTarget != null && getType != null && getHost != null) {
+            // Create a DataClass object and add it to camArrayList
+            val data = DataClass(getTitle, getDesc, getTarget, getType, getHost)
+            addCamData(data)
+        } else {
+            // Handle the case where any of the retrieved strings are null
+            // For example, show a toast message or log an error
+            Toast.makeText(this, "Invalid!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Function to add new items to camArrayList
+    private fun addCamData(data: DataClass) {
+        camArrayList.add(data)
+        adapter.notifyDataSetChanged()
     }
 
 
